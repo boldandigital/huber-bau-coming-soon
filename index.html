@@ -80,18 +80,18 @@
       align-items: center;
       justify-content: center;
       padding: 24px 24px 0;
-      gap: 16px;
+      gap: 4px;
       z-index: 1;
     }
     .hero__brand {
       display: inline-flex;
       align-items: center;
       font-family: 'Archivo', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.85rem;
       line-height: 1;
       letter-spacing: 0.005em;
       color: var(--hb-ink);
-      padding: 10px 0 18px;
+      padding: 8px 0 6px;
     }
     .hero__brand .wordmark__a { font-weight: 900; }
     .hero__brand .wordmark__bar {
@@ -313,8 +313,8 @@
 
     /* Mobile: smaller card type, tighter brand */
     @media (max-width: 720px) {
-      .hero { padding: 16px 18px 0; gap: 10px; }
-      .hero__brand { font-size: 0.95rem; padding: 4px 0 8px; }
+      .hero { padding: 16px 18px 0; gap: 0; }
+      .hero__brand { font-size: 0.95rem; padding: 4px 0 2px; }
       .hb-hero__svg { max-height: 42vh; }
       .hero__card-wrap { margin: -60px auto 0; }
       .hero__card { padding: 20px 18px 22px; gap: 18px; }
@@ -328,8 +328,8 @@
 
     /* Tiny phones: lock tighter */
     @media (max-width: 480px) {
-      .hero { padding: 12px 14px 0; gap: 8px; }
-      .hero__brand { font-size: 0.85rem; padding: 4px 0 6px; }
+      .hero { padding: 12px 14px 0; gap: 0; }
+      .hero__brand { font-size: 0.85rem; padding: 4px 0 2px; }
       .hb-hero__svg { max-height: 38vh; }
       .hero__card-wrap { margin: -50px auto 0; width: calc(100vw - 24px); }
       .hero__card { padding: 16px 14px 18px; gap: 14px; }
