@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HUBER BAU GmbH — Wir bauen gerade um.</title>
+  <meta name="description" content="HUBER BAU GmbH, Bauunternehmen aus Ravensburg (Oberschwaben). Unsere neue Website entsteht gerade." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    :root {
+      /* HUBER BAU brand tokens — locked from app/globals.css */
+      --hb-paper:        #FAFAF7;
+      --hb-paper-warm:   #F5F4EF;
+      --hb-paper-soft:   #F3F4E9;
+      --hb-mineral:      #EDEFDD;
+      --hb-lime:         #D8E84A;
+      --hb-lime-soft:    #ECF2DF;
+      --hb-ink:          #1A1A18;
+      --hb-ink-2:        #2A2A27;
+      --hb-mid:          #5C5B53;
+      --hb-mid-2:        #6F6E65;
+      --hb-mid-3:        #8A897F;
+      --hb-line:         #DEDDD5;
+      --hb-line-soft:    #D3D4BE;
+      --hb-concrete:     #C9C7BB;
+
+      --type-display: clamp(2.5rem, 4.6vw, 4.875rem);
+      --type-h2:      clamp(2.625rem, 4.6vw, 5rem);
+      --type-h3:      clamp(1.5rem, 2.2vw, 2.125rem);
+      --type-body:    1.0625rem;
+      --type-mono:    0.6875rem;
+      --letter-mono:  0.15em;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: var(--type-body);
+      line-height: 1.55;
+      color: var(--hb-ink);
+      background: linear-gradient(180deg, var(--hb-paper) 0%, var(--hb-paper-warm) 100%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--hb-lime); color: var(--hb-ink); }
+    a { color: inherit; text-decoration: none; }
+
+    /* Radial lime wash behind the SVG (matches hb-hero__wash) */
+    .bg-wash {
+      position: fixed;
+      top: -18%;
+      left: -8%;
+      width: 80vw;
+      height: 80vw;
+      max-width: 1200px;
+      max-height: 1200px;
+      background: radial-gradient(circle at center, rgba(216, 232, 74, 0.22) 0%, rgba(216, 232, 74, 0) 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+    .hero__stage {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 32px 280px;
+    }
+    .hero__stage-inner {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 1180px;
+      transform-origin: 50% 50%;
+    }
+    .hb-hero__svg {
+      width: 100%;
+      max-width: 1180px;
+      height: auto;
+      max-height: 70vh;
+      overflow: visible;
+      display: block;
+    }
+
+    /* Bottom-center overlay card */
+    .hero__card-wrap {
+      position: fixed;
+      left: 50%;
+      bottom: 8vh;
+      transform: translateX(-50%);
+      width: min(560px, calc(100vw - 32px));
+      z-index: 3;
+    }
+    .hero__card {
+      background: rgba(250, 250, 247, 0.86);
+      backdrop-filter: blur(12px) saturate(1.05);
+      -webkit-backdrop-filter: blur(12px) saturate(1.05);
+      border-top: 2px solid var(--hb-lime);
+      padding: 28px 32px 30px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: var(--type-mono);
+      font-weight: 500;
+      letter-spacing: var(--letter-mono);
+      text-transform: uppercase;
+      color: var(--hb-mid-2);
+      margin-bottom: 14px;
+    }
+    .accent-square {
+      width: 9px;
+      height: 9px;
+      background: var(--hb-lime);
+      flex-shrink: 0;
+    }
+    .card__title {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 3.2vw, 2.625rem);
+      line-height: 1.04;
+      letter-spacing: -0.018em;
+      color: var(--hb-ink);
+      margin: 0 0 14px 0;
+    }
+    .card__sub {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--hb-mid-2);
+      margin: 0 0 22px 0;
+    }
+    .card__contacts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+    }
+    .card__contact {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 18px;
+      align-items: baseline;
+      padding: 12px 0;
+      border-top: 1px solid var(--hb-line);
+    }
+    .card__contact:last-child { border-bottom: 1px solid var(--hb-line); }
+    .card__contact dt {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: var(--type-mono);
+      font-weight: 500;
+      letter-spacing: var(--letter-mono);
+      text-transform: uppercase;
+      color: var(--hb-mid-2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .card__contact dd {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--hb-ink);
+      margin: 0;
+    }
+    .card__contact dd a {
+      color: var(--hb-ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 200ms ease;
+    }
+    .card__contact dd a:hover { border-bottom-color: var(--hb-lime); }
+
+    /* Footer */
+    .foot {
+      position: relative;
+      z-index: 3;
+      background: var(--hb-ink);
+      color: var(--hb-paper-warm);
+      padding: 22px 32px;
+      flex-shrink: 0;
+    }
+    .foot__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .foot__mark {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Archivo', sans-serif;
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.005em;
+    }
+    .wordmark--light { color: var(--hb-paper-warm); }
+    .wordmark__a { font-weight: 900; }
+    .wordmark__bar {
+      display: inline-block;
+      width: 3px;
+      height: 1.05em;
+      background: var(--hb-lime);
+      margin: 0 0.42em;
+      flex-shrink: 0;
+    }
+    .wordmark__b { font-weight: 400; }
+    .foot__copy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: var(--type-mono);
+      font-weight: 400;
+      letter-spacing: var(--letter-mono);
+      color: var(--hb-mid-3);
+      text-transform: uppercase;
+    }
+    .foot__link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: var(--type-mono);
+      font-weight: 500;
+      letter-spacing: var(--letter-mono);
+      color: var(--hb-paper-warm);
+      text-decoration: none;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 200ms ease;
+    }
+    .foot__link:hover { border-bottom-color: var(--hb-lime); }
+
+    @media (max-width: 720px) {
+      .hero__stage { padding: 32px 20px 240px; }
+      .hb-hero__svg { max-height: 50vh; }
+      .hero__card-wrap { bottom: 6vh; width: calc(100vw - 32px); }
+      .hero__card { padding: 22px 22px 24px; }
+      .card__contact { grid-template-columns: 88px 1fr; gap: 12px; }
+      .foot__inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .foot__mark { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    /* Reduced-motion fallback: jump straight to the final composition */
+    @media (prefers-reduced-motion: reduce) {
+      .hb-hero__svg [data-fx] { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; }
+      .hero__stage-inner { transform: none !important; }
+    }
+
+    @media print {
+      body { background: var(--hb-paper); color: var(--hb-ink); }
+      .bg-wash { display: none; }
+      .hb-hero__svg { max-height: 28vh; }
+      .hero__card-wrap { position: static; transform: none; width: 100%; margin: 16px auto 24px; }
+      .hero__card {
+        background: var(--hb-paper);
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+        border: 1px solid var(--hb-line);
+        border-top: 2px solid var(--hb-lime);
+      }
+      .foot { background: var(--hb-paper); color: var(--hb-ink); border-top: 1px solid var(--hb-line); }
+      .wordmark--light, .foot__link { color: var(--hb-ink); }
+    }
+    @page { size: A4; margin: 18mm; }
+  </style>
+</head>
+<body>
+  <div class="bg-wash" aria-hidden="true"></div>
+
+  <main class="hero">
+    <div class="hero__stage">
+      <div id="hb-stage-inner" class="hero__stage-inner">
+        <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" class="hb-hero__svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="hbGrid" width="100" height="100" patternUnits="userSpaceOnUse">
+          <path
+            d="M 100 0 L 0 0 0 100"
+            style="fill:none;stroke:#1A1A18;stroke-width:1;opacity:0.05"
+          />
+        </pattern>
+        <linearGradient id="gGlassA" x1="0" y1="0" x2="0.25" y2="1">
+          <stop offset="0" stop-color="#E9EDEB" />
+          <stop offset="1" stop-color="#CBD2D0" />
+        </linearGradient>
+        <linearGradient id="gGlassB" x1="0" y1="0" x2="0.25" y2="1">
+          <stop offset="0" stop-color="#E1E6E4" />
+          <stop offset="1" stop-color="#C2CAC8" />
+        </linearGradient>
+        <linearGradient id="gDark" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#414644" />
+          <stop offset="1" stop-color="#1F2321" />
+        </linearGradient>
+        <linearGradient id="gCore" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#D3D1C9" />
+          <stop offset="1" stop-color="#C0BEB5" />
+        </linearGradient>
+        <linearGradient id="gShadow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="rgba(26,26,24,0.22)" />
+          <stop offset="1" stop-color="rgba(26,26,24,0)" />
+        </linearGradient>
+        <linearGradient id="gSweep" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="rgba(255,255,255,0)" />
+          <stop offset="0.5" stop-color="rgba(255,255,255,0.6)" />
+          <stop offset="1" stop-color="rgba(255,255,255,0)" />
+        </linearGradient>
+        <clipPath id="hbWipe">
+          <rect id="hb-wipe-rect" x="0" y="0" width="0" height="1000" />
+        </clipPath>
+        <clipPath id="hbGlassClip">
+          <rect x="580" y="240" width="600" height="612" />
+        </clipPath>
+      </defs>
+
+      
+      <rect
+        data-fx="in"
+        data-r="0,0.005"
+        data-out="0.78,0.92"
+        x="0"
+        y="0"
+        width="1600"
+        height="1000"
+        fill="url(#hbGrid)"
+      />
+      <rect
+        data-fx="in"
+        data-r="0,0.005"
+        data-out="0.60,0.72"
+        x="60"
+        y="60"
+        width="1480"
+        height="880"
+        style="fill:none;stroke:#B5B4AC;stroke-width:1.2;stroke-dasharray:7 5;opacity:0.55"
+      />
+
+      
+      <g id="hb-pencil" data-fx="in" data-r="0,0.01" data-out="0.66,0.78">
+        <path
+          data-fx="draw"
+          data-r="0.012,0.05"
+          d="M 380 851 Q 900 845 1462 852"
+          style="fill:none;stroke:#8A887E;stroke-width:2.6;stroke-linecap:round;opacity:0.85"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.02,0.045"
+          d="M 455 250 H 505 M 480 226 V 274"
+          style="fill:none;stroke:#8A887E;stroke-width:1.2;stroke-linecap:round;opacity:0.7"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.025,0.075"
+          d="M 479 874 Q 475 560 481 230"
+          style="fill:none;stroke:#8A887E;stroke-width:2.4;stroke-linecap:round;opacity:0.85"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.045,0.095"
+          d="M 456 251 Q 820 244 1200 250"
+          style="fill:none;stroke:#8A887E;stroke-width:2.4;stroke-linecap:round;opacity:0.85"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.06,0.11"
+          d="M 1181 228 Q 1185 560 1179 870"
+          style="fill:none;stroke:#8A887E;stroke-width:2.4;stroke-linecap:round;opacity:0.85"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.055,0.1"
+          d="M 1452 194 a 22 22 0 1 1 0.2 0 M 1452 166 V 136 M 1444 146 L 1452 134 L 1460 146"
+          style="fill:none;stroke:#8A887E;stroke-width:1.6;stroke-linecap:round;opacity:0.75"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.075,0.115"
+          d="M 583 868 Q 579 540 584 204"
+          style="fill:none;stroke:#8A887E;stroke-width:2.2;stroke-linecap:round;opacity:0.8"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.085,0.12"
+          d="M 462 213 Q 525 207 596 212"
+          style="fill:none;stroke:#8A887E;stroke-width:2.2;stroke-linecap:round;opacity:0.8"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.09,0.125"
+          d="M 1178 622 Q 1290 616 1396 621"
+          style="fill:none;stroke:#8A887E;stroke-width:2.2;stroke-linecap:round;opacity:0.8"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.1,0.135"
+          d="M 1391 602 Q 1395 730 1389 866"
+          style="fill:none;stroke:#8A887E;stroke-width:2.2;stroke-linecap:round;opacity:0.8"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.1,0.14"
+          d="M 470 701 Q 830 695 1192 700"
+          style="fill:none;stroke:#8A887E;stroke-width:1.7;stroke-linecap:round;opacity:0.55"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.11,0.15"
+          d="M 470 551 Q 830 546 1192 551"
+          style="fill:none;stroke:#8A887E;stroke-width:1.7;stroke-linecap:round;opacity:0.55"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.12,0.16"
+          d="M 470 401 Q 830 396 1192 401"
+          style="fill:none;stroke:#8A887E;stroke-width:1.7;stroke-linecap:round;opacity:0.55"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.125,0.165"
+          d="M 492 268 l 20 -24 m -10 34 l 28 -34 m -16 44 l 32 -38 m -18 48 l 34 -40"
+          style="fill:none;stroke:#8A887E;stroke-width:1.4;stroke-linecap:round;opacity:0.5"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.13,0.17"
+          d="M 693 777 a 38 38 0 1 1 -76 0 a 38 38 0 1 1 76 0"
+          style="fill:none;stroke:#8A887E;stroke-width:1.5;stroke-linecap:round;opacity:0.6"
+        />
+        <text
+          data-fx="in"
+          data-r="0.1,0.145"
+          x="480"
+          y="152"
+          style="font-family:'IBM Plex Mono', monospace';font-size:15;fill:#8A887E;letter-spacing:1.5"
+        >
+          skizze 01 — südansicht
+        </text>
+        <g data-fx="in" data-r="0.05,0.1">
+          <text
+            x="92"
+            y="884"
+            style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53;letter-spacing:1.2"
+          >
+            HUBER BAU GMBH — RAVENSBURG
+          </text>
+          <text
+            x="92"
+            y="906"
+            style="font-family:'IBM Plex Mono', monospace';font-size:12;fill:#75746B;letter-spacing:1"
+          >
+            PROJEKT 027 · ANSICHT SÜD · M 1:200
+          </text>
+          <text
+            x="92"
+            y="926"
+            style="font-family:'IBM Plex Mono', monospace';font-size:12;fill:#8A887E;letter-spacing:1"
+          >
+            GEZ. JH — 03/2026
+          </text>
+        </g>
+      </g>
+
+      
+      <g id="hb-tech" data-fx="in" data-r="0.14,0.16" data-out="0.72,0.84">
+        <path
+          data-fx="draw"
+          data-r="0.16,0.24"
+          d="M 480 250 H 1180 V 850 H 480 Z"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.6"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.175,0.245"
+          d="M 480 210 H 580 V 850"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.6"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.19,0.255"
+          d="M 1180 620 H 1390 V 850"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.6"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.2,0.27"
+          d="M 480 395 H 1180 M 480 545 H 1180 M 480 695 H 1180"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.1"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.215,0.295"
+          d="M 655 266 V 850 M 730 266 V 850 M 805 266 V 850 M 880 266 V 850 M 955 266 V 850 M 1030 266 V 850 M 1105 266 V 850"
+          style="fill:none;stroke:#ABAAA1;stroke-width:0.8"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.235,0.3"
+          d="M 480 905 H 1390 M 480 896 V 914 M 1390 896 V 914 M 473 912 L 487 898 M 1383 912 L 1397 898"
+          style="fill:none;stroke:#6F6E65;stroke-width:1.1"
+        />
+        <path
+          data-fx="draw"
+          data-r="0.25,0.31"
+          d="M 1428 250 V 850 M 1420 250 H 1436 M 1420 850 H 1436 M 1421 857 L 1435 843 M 1421 257 L 1435 243"
+          style="fill:none;stroke:#6F6E65;stroke-width:1.1"
+        />
+        <path
+          data-fx="in"
+          data-r="0.23,0.28"
+          d="M 580 196 V 246 M 730 196 V 246 M 880 196 V 246 M 1030 196 V 246 M 1180 196 V 246"
+          style="fill:none;stroke:#ABAAA1;stroke-width:1;stroke-dasharray:5 5"
+        />
+        <circle
+          data-fx="draw"
+          data-r="0.235,0.275"
+          cx="580"
+          cy="175"
+          r="16"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.3"
+        />
+        <circle
+          data-fx="draw"
+          data-r="0.245,0.285"
+          cx="730"
+          cy="175"
+          r="16"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.3"
+        />
+        <circle
+          data-fx="draw"
+          data-r="0.255,0.295"
+          cx="880"
+          cy="175"
+          r="16"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.3"
+        />
+        <circle
+          data-fx="draw"
+          data-r="0.265,0.305"
+          cx="1030"
+          cy="175"
+          r="16"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.3"
+        />
+        <circle
+          data-fx="draw"
+          data-r="0.275,0.315"
+          cx="1180"
+          cy="175"
+          r="16"
+          style="fill:none;stroke:#2A2A27;stroke-width:1.3"
+        />
+        <g data-fx="in" data-r="0.27,0.32">
+          <text x="580" y="180" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#2A2A27;text-anchor:middle">A</text>
+          <text x="730" y="180" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#2A2A27;text-anchor:middle">B</text>
+          <text x="880" y="180" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#2A2A27;text-anchor:middle">C</text>
+          <text x="1030" y="180" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#2A2A27;text-anchor:middle">D</text>
+          <text x="1180" y="180" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#2A2A27;text-anchor:middle">E</text>
+        </g>
+        <path
+          data-fx="in"
+          data-r="0.26,0.31"
+          d="M 446 850 l 16 -9 v 18 z M 446 695 l 16 -9 v 18 z M 446 545 l 16 -9 v 18 z M 446 395 l 16 -9 v 18 z M 446 240 l 16 -9 v 18 z"
+          style="fill:#2A2A27"
+        />
+        <g data-fx="in" data-r="0.27,0.325">
+          <text x="438" y="855" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53;text-anchor:end">±0,00</text>
+          <text x="438" y="700" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53;text-anchor:end">+4,05</text>
+          <text x="438" y="550" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53;text-anchor:end">+8,10</text>
+          <text x="438" y="400" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53;text-anchor:end">+12,15</text>
+          <text x="438" y="245" style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53;text-anchor:end">+16,20</text>
+        </g>
+        <text
+          data-fx="in"
+          data-r="0.28,0.33"
+          x="935"
+          y="932"
+          style="font-family:'IBM Plex Mono', monospace';font-size:14;fill:#5C5B53;text-anchor:middle;letter-spacing:1"
+        >
+          24,57 m
+        </text>
+        <text
+          data-fx="in"
+          data-r="0.285,0.335"
+          x="1444"
+          y="554"
+          style="font-family:'IBM Plex Mono', monospace';font-size:13;fill:#5C5B53"
+        >
+          16,20
+        </text>
+      </g>
+
+      
+      <g id="hb-structure" data-fx="in" data-r="0.30,0.32" data-out="0.74,0.84">
+        <rect
+          data-fx="rise"
+          data-r="0.32,0.37"
+          x="575"
+          y="250"
+          width="10"
+          height="600"
+          style="fill:#2F2F2B;transform-box:fill-box;transform-origin:50% 100%"
+        />
+        <rect
+          data-fx="rise"
+          data-r="0.33,0.38"
+          x="725"
+          y="250"
+          width="10"
+          height="600"
+          style="fill:#2F2F2B;transform-box:fill-box;transform-origin:50% 100%"
+        />
+        <rect
+          data-fx="rise"
+          data-r="0.34,0.39"
+          x="875"
+          y="250"
+          width="10"
+          height="600"
+          style="fill:#2F2F2B;transform-box:fill-box;transform-origin:50% 100%"
+        />
+        <rect
+          data-fx="rise"
+          data-r="0.35,0.40"
+          x="1025"
+          y="250"
+          width="10"
+          height="600"
+          style="fill:#2F2F2B;transform-box:fill-box;transform-origin:50% 100%"
+        />
+        <rect
+          data-fx="rise"
+          data-r="0.36,0.41"
+          x="1170"
+          y="250"
+          width="10"
+          height="600"
+          style="fill:#2F2F2B;transform-box:fill-box;transform-origin:50% 100%"
+        />
+        <rect
+          data-fx="rise"
+          data-r="0.34,0.45"
+          x="480"
+          y="210"
+          width="100"
+          height="640"
+          style="fill:#DAD8D0;stroke:#2A2A27;stroke-width:1;transform-box:fill-box;transform-origin:50% 100%"
+        />
+        <rect
+          data-fx="slide"
+          data-r="0.38,0.44"
+          x="480"
+          y="686"
+          width="700"
+          height="18"
+          style="fill:#E6E5DE;stroke:#2A2A27;stroke-width:1;transform-box:fill-box;transform-origin:0% 50%"
+        />
+        <rect
+          data-fx="slide"
+          data-r="0.41,0.47"
+          x="480"
+          y="536"
+          width="700"
+          height="18"
+          style="fill:#E6E5DE;stroke:#2A2A27;stroke-width:1;transform-box:fill-box;transform-origin:0% 50%"
+        />
+        <rect
+          data-fx="slide"
+          data-r="0.44,0.50"
+          x="480"
+          y="386"
+          width="700"
+          height="18"
+          style="fill:#E6E5DE;stroke:#2A2A27;stroke-width:1;transform-box:fill-box;transform-origin:0% 50%"
+        />
+        <rect
+          data-fx="slide"
+          data-r="0.47,0.53"
+          x="480"
+          y="238"
+          width="700"
+          height="18"
+          style="fill:#E6E5DE;stroke:#2A2A27;stroke-width:1;transform-box:fill-box;transform-origin:0% 50%"
+        />
+        <rect
+          data-fx="rise"
+          data-r="0.46,0.52"
+          x="1180"
+          y="620"
+          width="210"
+          height="230"
+          style="fill:#EEEDE6;stroke:#2A2A27;stroke-width:1;transform-box:fill-box;transform-origin:50% 100%"
+        />
+      </g>
+
+      
+      <g style="clip-path:url(#hbWipe)">
+        <rect x="450" y="854" width="970" height="36" fill="url(#gShadow)" />
+        <rect x="200" y="848" width="1260" height="2.5" style="fill:#22221F" />
+        <rect x="480" y="210" width="100" height="640" fill="url(#gCore)" />
+        <rect x="512" y="210" width="1" height="640" style="fill:rgba(26,26,24,.08)" />
+        <rect x="548" y="210" width="1" height="640" style="fill:rgba(26,26,24,.08)" />
+        <rect x="476" y="205" width="108" height="6" style="fill:#8F8E85" />
+        <rect x="519" y="300" width="14" height="60" style="fill:#5E625F;opacity:0.9" />
+        <rect x="519" y="450" width="14" height="60" style="fill:#5E625F;opacity:0.9" />
+        <rect x="519" y="600" width="14" height="60" style="fill:#5E625F;opacity:0.9" />
+        <rect x="580" y="266" width="600" height="120" fill="url(#gGlassA)" />
+        <rect x="580" y="404" width="600" height="132" fill="url(#gGlassB)" />
+        <rect x="580" y="554" width="600" height="132" fill="url(#gGlassA)" />
+        <rect x="580" y="704" width="600" height="146" fill="url(#gGlassB)" />
+        <rect x="805" y="266" width="75" height="120" style="fill:rgba(255,255,255,.32)" />
+        <rect x="580" y="404" width="75" height="132" style="fill:rgba(255,255,255,.32)" />
+        <rect x="955" y="554" width="75" height="132" style="fill:rgba(255,255,255,.32)" />
+        <rect x="1030" y="404" width="75" height="132" style="fill:rgba(26,26,24,.05)" />
+        <rect x="730" y="554" width="75" height="132" style="fill:rgba(26,26,24,.05)" />
+        <rect x="880" y="704" width="75" height="146" style="fill:rgba(26,26,24,.05)" />
+        <rect x="655" y="266" width="75" height="120" style="fill:rgba(26,26,24,.05)" />
+        <path
+          d="M 617.5 266 V 850 M 692.5 266 V 850 M 767.5 266 V 850 M 842.5 266 V 850 M 917.5 266 V 850 M 992.5 266 V 850 M 1067.5 266 V 850 M 1142.5 266 V 850"
+          style="fill:none;stroke:rgba(26,26,24,.16);stroke-width:1"
+        />
+        <path
+          d="M 655 266 V 850 M 730 266 V 850 M 805 266 V 850 M 880 266 V 850 M 955 266 V 850 M 1030 266 V 850 M 1105 266 V 850"
+          style="fill:none;stroke:#54544E;stroke-width:2"
+        />
+        <rect x="476" y="386" width="708" height="18" style="fill:#BFBDB4" />
+        <rect x="476" y="536" width="708" height="18" style="fill:#BFBDB4" />
+        <rect x="476" y="686" width="708" height="18" style="fill:#BFBDB4" />
+        <rect x="476" y="238" width="708" height="28" style="fill:#B3B1A8" />
+        <rect x="476" y="236" width="708" height="3" style="fill:#22221F" />
+        <rect x="580" y="704" width="150" height="146" fill="url(#gDark)" />
+        <path
+          d="M 630 712 V 850 M 680 712 V 850"
+          style="fill:none;stroke:rgba(245,244,239,.25);stroke-width:1.5"
+        />
+        <rect x="670" y="775" width="3" height="26" style="fill:#D8E84A;opacity:0.9" />
+        <rect x="568" y="698" width="176" height="10" style="fill:rgba(26,26,24,.10)" />
+        <rect x="568" y="684" width="176" height="14" style="fill:#22221F" />
+        <rect x="730" y="684" width="8" height="166" style="fill:#D8E84A" />
+        <rect x="1180" y="620" width="210" height="230" style="fill:#D8D6CE" />
+        <rect x="1180" y="620" width="210" height="22" style="fill:#B3B1A8" />
+        <rect x="1180" y="618" width="210" height="3" style="fill:#22221F" />
+        <rect x="1196" y="664" width="178" height="104" fill="url(#gGlassA)" />
+        <path
+          d="M 1241 664 V 768 M 1285 664 V 768 M 1329 664 V 768"
+          style="fill:none;stroke:#54544E;stroke-width:1.5"
+        />
+        <rect x="1196" y="768" width="178" height="6" style="fill:#BFBDB4" />
+        <path
+          d="M 480 850 V 210 H 580 V 250 H 1180 V 850 M 1180 620 H 1390 V 850"
+          style="fill:none;stroke:#232320;stroke-width:2"
+        />
+        <g style="clip-path:url(#hbGlassClip)">
+          <rect
+            id="hb-sweep"
+            x="0"
+            y="230"
+            width="240"
+            height="640"
+            fill="url(#gSweep)"
+            opacity={0.6}
+            transform="translate(-600,0) skewX(-16)"
+          />
+        </g>
+      </g>
+
+      
+      <rect
+        id="hb-wipe-edge"
+        x="-10"
+        y="206"
+        width="4"
+        height="680"
+        style="fill:#D8E84A;opacity:0"
+      />
+    </svg>
+      </div>
+    </div>
+
+    <div class="hero__card-wrap">
+      <div class="hero__card">
+        <span class="eyebrow">
+          <span class="accent-square" aria-hidden="true"></span>
+          <span>Demnächst verfügbar</span>
+        </span>
+        <h1 class="card__title">Wir bauen gerade um.</h1>
+        <p class="card__sub">Unsere neue Website entsteht. In der Zwischenzeit erreichen Sie uns direkt:</p>
+        <dl class="card__contacts">
+          <div class="card__contact">
+            <dt><span class="accent-square" aria-hidden="true"></span>Telefon</dt>
+            <dd><a href="tel:+497517694522">0751 769 45 22</a></dd>
+          </div>
+          <div class="card__contact">
+            <dt><span class="accent-square" aria-hidden="true"></span>E-Mail</dt>
+            <dd><a href="mailto:info@huberbaugmbh.de">info@huberbaugmbh.de</a></dd>
+          </div>
+          <div class="card__contact">
+            <dt><span class="accent-square" aria-hidden="true"></span>Adresse</dt>
+            <dd>Rautbrühl 11, 88214 Ravensburg</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__inner">
+      <div class="foot__mark">
+        <span class="wordmark wordmark--light">
+          <span class="wordmark__a">HUBER</span><span class="wordmark__bar" aria-hidden="true"></span><span class="wordmark__b">BAU</span>
+        </span>
+        <span class="foot__copy">© 2026 HUBER BAU GMBH</span>
+      </div>
+      <a href="impressum.html" class="foot__link">Impressum ↗</a>
+    </div>
+  </footer>
+
+  <script>
+  /* Autoplay engine — same animation semantics as lib/useHeroScroll.ts,
+     but driven by absolute time t in [0,1] instead of scroll progress p.
+     Animation timing is mapped from each element's data-r="a,b" range:
+       a → AUTOPLAY_MS * a   (start)
+       b → AUTOPLAY_MS * b   (end)
+     After t reaches 1.0, the final state is held indefinitely. */
+  (function () {
+    var AUTOPLAY_MS = 9500;
+    var hero = document.getElementById('hb-stage-inner');
+    if (!hero) return;
+    var svg = hero.querySelector('svg');
+    if (!svg) return;
+
+    var wipeRect = document.getElementById('hb-wipe-rect');
+    var wipeEdge = document.getElementById('hb-wipe-edge');
+    var sweep = document.getElementById('hb-sweep');
+
+    // Easings copied verbatim from useHeroScroll.ts
+    var ez  = function (t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2; };
+    var ezo = function (t) { return 1 - Math.pow(1 - t, 3); };
+    var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+    var seg = function (p, a, b) { return clamp((p - a) / (b - a), 0, 1); };
+
+    // Pre-compute per-element FX state
+    var fx = Array.prototype.map.call(
+      hero.querySelectorAll('[data-fx]'),
+      function (el) {
+        var r = (el.dataset.r || '0,1').split(',').map(Number);
+        var kind = el.dataset.fx || 'in';
+        var node = {
+          el: el,
+          kind: kind,
+          a: r[0] || 0,
+          b: r[1] || 1,
+          oa: null, ob: null,
+          L: 0
+        };
+        if (el.dataset.out) {
+          var q = el.dataset.out.split(',').map(Number);
+          node.oa = q[0];
+          node.ob = q[1];
+        }
+        if (kind === 'draw') {
+          try {
+            node.L = el.getTotalLength();
+          } catch (e) { node.L = 1; }
+          el.style.strokeDasharray = node.L + ' ' + node.L;
+          el.style.strokeDashoffset = node.L;
+        } else if (kind === 'in' || kind === 'rise' || kind === 'slide') {
+          el.style.opacity = '0';
+        }
+        return node;
+      }
+    );
+
+    var start = null;
+    function apply(p) {
+      for (var i = 0; i < fx.length; i++) {
+        var f = fx[i];
+        var k = seg(p, f.a, f.b);
+        if (f.kind === 'draw') {
+          f.el.style.strokeDashoffset = String(f.L * (1 - k));
+          if (f.oa != null && f.ob != null) {
+            f.el.style.opacity = String(1 - seg(p, f.oa, f.ob));
+          }
+        } else if (f.kind === 'in') {
+          var o = ez(k);
+          if (f.oa != null && f.ob != null) o *= 1 - seg(p, f.oa, f.ob);
+          f.el.style.opacity = String(o);
+        } else if (f.kind === 'rise') {
+          f.el.style.transform = 'scaleY(' + ezo(k) + ')';
+          var oo = k > 0.001 ? 1 : 0;
+          if (f.oa != null && f.ob != null) oo *= 1 - seg(p, f.oa, f.ob);
+          f.el.style.opacity = String(oo);
+        } else if (f.kind === 'slide') {
+          f.el.style.transform = 'scaleX(' + ezo(k) + ')';
+          var oo2 = k > 0.001 ? 1 : 0;
+          if (f.oa != null && f.ob != null) oo2 *= 1 - seg(p, f.oa, f.ob);
+          f.el.style.opacity = String(oo2);
+        }
+      }
+      // Material wipe: rect width grows 0 → 1600 between p=0.48 and p=0.72
+      if (wipeRect) {
+        var w = 1600 * ez(seg(p, 0.48, 0.72));
+        wipeRect.setAttribute('width', String(w));
+      }
+      // Lime wipe edge tracks the wipe
+      if (wipeEdge) {
+        var ww = 1600 * ez(seg(p, 0.48, 0.72));
+        wipeEdge.setAttribute('x', String(clamp(ww - 2, 0, 1596)));
+        wipeEdge.style.opacity = String(seg(p, 0.47, 0.51) * (1 - seg(p, 0.70, 0.74)));
+      }
+      // Glass sweep — diagonal white sheen moves across the facade
+      if (sweep) {
+        var sx = -600 + 2800 * ez(seg(p, 0.74, 0.92));
+        sweep.setAttribute('transform', 'translate(' + sx + ',0) skewX(-16)');
+      }
+    }
+
+    function tick(ts) {
+      if (start === null) start = ts;
+      var elapsed = ts - start;
+      var p = clamp(elapsed / AUTOPLAY_MS, 0, 1);
+      apply(p);
+      if (p < 1) requestAnimationFrame(tick);
+      else {
+        // Hold the final composition with a subtle lime tint surge (matches chapter 6)
+        hero.style.transform = '';
+      }
+    }
+
+    // Honor reduced motion: skip autoplay, jump to final composition
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      apply(1);
+    } else {
+      requestAnimationFrame(tick);
+    }
+  })();
+  </script>
+</body>
+</html>
