@@ -263,14 +263,36 @@
     }
     .foot__link:hover { border-bottom-color: var(--hb-lime); }
 
+    /* Tablet: 720px and below — tighten card margins, stack to 1-col */
+    @media (max-width: 860px) {
+      .hero__card { grid-template-columns: 1fr; padding: 28px 26px 30px; gap: 24px; }
+      .hero__card__intro { padding-right: 0; }
+    }
+
+    /* Mobile: 720px and below — narrower hero, card sits halfway over */
     @media (max-width: 720px) {
-      .hero__stage { padding: 32px 20px 240px; }
+      .hero__stage { padding: 32px 20px 200px; }
       .hb-hero__svg { max-height: 50vh; }
-      .hero__card-wrap { margin: -240px auto 0; width: calc(100vw - 32px); }
-      .hero__card { padding: 22px 22px 24px; }
-      .card__contact { grid-template-columns: 88px 1fr; gap: 12px; }
+      .hero__card-wrap { margin: -260px auto 0; width: calc(100vw - 32px); }
+      .hero__card { padding: 22px 18px 24px; }
+      .card__title { font-size: clamp(28px, 8vw, 38px); }
+      .card__sub { font-size: 14px; }
+      .card__contact { grid-template-columns: 92px 1fr; gap: 12px; }
       .foot__inner { flex-direction: column; align-items: flex-start; gap: 14px; }
       .foot__mark { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    /* Tiny phones: 390px and below — pull card up hard, halfway over SVG */
+    @media (max-width: 480px) {
+      .hero__stage { padding: 24px 16px 80px; }
+      .hero__card-wrap { margin: -440px auto 0; width: calc(100vw - 24px); }
+      .hero__card { padding: 20px 16px 22px; gap: 18px; }
+      .hero__card__contacts { gap: 10px; }
+      .card__title { font-size: clamp(26px, 8.5vw, 34px); }
+      .card__sub { font-size: 13.5px; line-height: 1.55; }
+      .card__contact { grid-template-columns: 84px 1fr; gap: 10px; }
+      .card__contact dt { font-size: 10px; }
+      .card__contact dd { font-size: 14px; }
     }
 
     /* Reduced-motion fallback: jump straight to the final composition */
