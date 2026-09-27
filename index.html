@@ -34,7 +34,12 @@
       --letter-mono:  0.15em;
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
     body {
       font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: var(--type-body);
@@ -43,6 +48,8 @@
       background: linear-gradient(180deg, var(--hb-paper) 0%, var(--hb-paper-warm) 100%);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -66,20 +73,46 @@
     .hero {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      z-index: 1;
-    }
-    .hero__stage {
       flex: 1 1 auto;
       min-height: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 56px 32px 120px;
+      padding: 24px 24px 0;
+      gap: 16px;
+      z-index: 1;
+    }
+    .hero__brand {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Archivo', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1;
+      letter-spacing: 0.005em;
+      color: var(--hb-ink);
+      padding: 6px 0 14px;
+    }
+    .hero__brand .wordmark__a { font-weight: 900; }
+    .hero__brand .wordmark__bar {
+      display: inline-block;
+      width: 3px;
+      height: 1.05em;
+      background: var(--hb-lime);
+      margin: 0 0.42em;
+      flex-shrink: 0;
+    }
+    .hero__brand .wordmark__b { font-weight: 400; }
+    .hero__stage {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0 0;
+      min-height: 0;
     }
     .hero__stage-inner {
-      flex: 0 0 auto;
+      flex: 0 1 auto;
       width: 100%;
       max-width: 1180px;
       transform-origin: 50% 50%;
@@ -88,17 +121,18 @@
       width: 100%;
       max-width: 1180px;
       height: auto;
-      max-height: 70vh;
+      max-height: 56vh;
       overflow: visible;
       display: block;
+      flex-shrink: 1;
     }
 
-    /* Bottom-center info card — relative, embedded halfway up the hero, full SVG width */
+    /* Bottom info card — overlapping the bottom of the building drawing */
     .hero__card-wrap {
-      position: relative;
-      margin: -360px auto 0;
       width: min(1180px, calc(100vw - 32px));
+      margin: -80px auto 0;
       z-index: 3;
+      flex-shrink: 0;
     }
     .hero__card {
       background: rgba(250, 250, 247, 0.94);
@@ -201,11 +235,14 @@
 
     /* Footer */
     .foot {
-      position: relative;
-      z-index: 3;
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
       background: var(--hb-ink);
       color: var(--hb-paper-warm);
-      padding: 22px 32px;
+      padding: 18px 32px;
       flex-shrink: 0;
     }
     .foot__inner {
@@ -263,36 +300,46 @@
     }
     .foot__link:hover { border-bottom-color: var(--hb-lime); }
 
-    /* Tablet: 720px and below — tighten card margins, stack to 1-col */
+    /* Tablet: stack card to 1-col, tighten margins */
     @media (max-width: 860px) {
-      .hero__card { grid-template-columns: 1fr; padding: 28px 26px 30px; gap: 24px; }
+      .hero { padding: 24px 24px 0; }
+      .hero__card { grid-template-columns: 1fr; padding: 24px 22px 26px; gap: 22px; }
       .hero__card__intro { padding-right: 0; }
+      .foot { padding: 16px 24px; }
+      .foot__inner { gap: 18px; }
+      .foot__mark { gap: 16px; }
     }
 
-    /* Mobile: 720px and below — narrower hero, card sits halfway over */
+    /* Mobile: smaller card type, tighter brand */
     @media (max-width: 720px) {
-      .hero__stage { padding: 32px 20px 200px; }
-      .hb-hero__svg { max-height: 50vh; }
-      .hero__card-wrap { margin: -260px auto 0; width: calc(100vw - 32px); }
-      .hero__card { padding: 22px 18px 24px; }
-      .card__title { font-size: clamp(28px, 8vw, 38px); }
+      .hero { padding: 16px 18px 0; gap: 10px; }
+      .hero__brand { font-size: 0.95rem; padding: 4px 0 8px; }
+      .hb-hero__svg { max-height: 42vh; }
+      .hero__card-wrap { margin: -60px auto 0; }
+      .hero__card { padding: 20px 18px 22px; gap: 18px; }
+      .card__title { font-size: clamp(26px, 8vw, 38px); }
       .card__sub { font-size: 14px; }
-      .card__contact { grid-template-columns: 92px 1fr; gap: 12px; }
-      .foot__inner { flex-direction: column; align-items: flex-start; gap: 14px; }
-      .foot__mark { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .card__contact { grid-template-columns: 84px 1fr; gap: 12px; }
+      .foot { padding: 14px 18px; }
+      .foot__inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .foot__mark { flex-direction: column; align-items: flex-start; gap: 6px; }
     }
 
-    /* Tiny phones: 390px and below — pull card up hard, halfway over SVG */
+    /* Tiny phones: lock tighter */
     @media (max-width: 480px) {
-      .hero__stage { padding: 24px 16px 80px; }
-      .hero__card-wrap { margin: -440px auto 0; width: calc(100vw - 24px); }
-      .hero__card { padding: 20px 16px 22px; gap: 18px; }
-      .hero__card__contacts { gap: 10px; }
-      .card__title { font-size: clamp(26px, 8.5vw, 34px); }
-      .card__sub { font-size: 13.5px; line-height: 1.55; }
-      .card__contact { grid-template-columns: 84px 1fr; gap: 10px; }
-      .card__contact dt { font-size: 10px; }
-      .card__contact dd { font-size: 14px; }
+      .hero { padding: 12px 14px 0; gap: 8px; }
+      .hero__brand { font-size: 0.85rem; padding: 4px 0 6px; }
+      .hb-hero__svg { max-height: 38vh; }
+      .hero__card-wrap { margin: -50px auto 0; width: calc(100vw - 24px); }
+      .hero__card { padding: 16px 14px 18px; gap: 14px; }
+      .hero__card__contacts { gap: 8px; }
+      .card__title { font-size: clamp(22px, 8vw, 30px); }
+      .card__sub { font-size: 13px; line-height: 1.5; }
+      .card__contact { grid-template-columns: 78px 1fr; gap: 10px; }
+      .card__contact dt { font-size: 9.5px; }
+      .card__contact dd { font-size: 13px; }
+      .foot { padding: 12px 14px; font-size: 0.7rem; }
+      .foot__copy { font-size: 9.5px; letter-spacing: 0.08em; }
     }
 
     /* Reduced-motion fallback: jump straight to the final composition */
@@ -322,6 +369,9 @@
   <div class="bg-wash" aria-hidden="true"></div>
 
   <main class="hero">
+    <div class="hero__brand" aria-label="HUBER BAU GmbH">
+      <span class="wordmark__a">HUBER</span><span class="wordmark__bar" aria-hidden="true"></span><span class="wordmark__b">BAU</span>
+    </div>
     <div class="hero__stage">
       <div id="hb-stage-inner" class="hero__stage-inner">
         <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" class="hb-hero__svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -862,12 +912,7 @@
 
   <footer class="foot">
     <div class="foot__inner">
-      <div class="foot__mark">
-        <span class="wordmark wordmark--light">
-          <span class="wordmark__a">HUBER</span><span class="wordmark__bar" aria-hidden="true"></span><span class="wordmark__b">BAU</span>
-        </span>
-        <span class="foot__copy">© 2026 HUBER BAU GMBH</span>
-      </div>
+      <span class="foot__copy">© 2026 HUBER BAU GMBH · RAUTBRÜHL 11 · 88214 RAVENSBURG</span>
       <a href="impressum.html" class="foot__link">Impressum ↗</a>
     </div>
   </footer>
