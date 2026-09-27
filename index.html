@@ -93,19 +93,34 @@
       display: block;
     }
 
-    /* Bottom-center info card — relative, embedded halfway up the hero drawing */
+    /* Bottom-center info card — relative, embedded halfway up the hero, full SVG width */
     .hero__card-wrap {
       position: relative;
       margin: -360px auto 0;
-      width: min(560px, calc(100vw - 32px));
+      width: min(1180px, calc(100vw - 32px));
       z-index: 3;
     }
     .hero__card {
-      background: rgba(250, 250, 247, 0.86);
-      backdrop-filter: blur(12px) saturate(1.05);
-      -webkit-backdrop-filter: blur(12px) saturate(1.05);
-      border-top: 2px solid var(--hb-lime);
-      padding: 28px 32px 30px;
+      background: rgba(250, 250, 247, 0.94);
+      backdrop-filter: blur(14px) saturate(1.05);
+      -webkit-backdrop-filter: blur(14px) saturate(1.05);
+      border-top: 3px solid var(--hb-lime);
+      padding: 32px 40px 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      gap: 40px;
+      align-items: start;
+    }
+    .hero__card__intro { padding-right: 12px; }
+    .hero__card__contacts {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+    .hero__card__contacts dl { margin: 0; }
+    @media (max-width: 860px) {
+      .hero__card { grid-template-columns: 1fr; padding: 24px 22px 26px; gap: 22px; }
+      .hero__card__intro { padding-right: 0; }
     }
     .eyebrow {
       display: inline-flex;
@@ -795,26 +810,30 @@
 
     <div class="hero__card-wrap">
       <div class="hero__card">
-        <span class="eyebrow">
-          <span class="accent-square" aria-hidden="true"></span>
-          <span>Demnächst verfügbar</span>
-        </span>
-        <h1 class="card__title">Wir bauen gerade um.</h1>
-        <p class="card__sub">Unsere neue Website entsteht. In der Zwischenzeit erreichen Sie uns direkt:</p>
-        <dl class="card__contacts">
-          <div class="card__contact">
-            <dt><span class="accent-square" aria-hidden="true"></span>Telefon</dt>
-            <dd><a href="tel:+497517694522">0751 769 45 22</a></dd>
-          </div>
-          <div class="card__contact">
-            <dt><span class="accent-square" aria-hidden="true"></span>E-Mail</dt>
-            <dd><a href="mailto:info@huberbaugmbh.de">info@huberbaugmbh.de</a></dd>
-          </div>
-          <div class="card__contact">
-            <dt><span class="accent-square" aria-hidden="true"></span>Adresse</dt>
-            <dd>Rautbrühl 11, 88214 Ravensburg</dd>
-          </div>
-        </dl>
+        <div class="hero__card__intro">
+          <span class="eyebrow">
+            <span class="accent-square" aria-hidden="true"></span>
+            <span>Demnächst verfügbar</span>
+          </span>
+          <h1 class="card__title">Wir bauen gerade um.</h1>
+          <p class="card__sub">Unsere neue Website entsteht. In der Zwischenzeit erreichen Sie uns direkt:</p>
+        </div>
+        <div class="hero__card__contacts">
+          <dl class="card__contacts">
+            <div class="card__contact">
+              <dt><span class="accent-square" aria-hidden="true"></span>Telefon</dt>
+              <dd><a href="tel:+497****4522">0751 769 45 22</a></dd>
+            </div>
+            <div class="card__contact">
+              <dt><span class="accent-square" aria-hidden="true"></span>E-Mail</dt>
+              <dd><a href="mailto:info@huberbaugmbh.de">info@huberbaugmbh.de</a></dd>
+            </div>
+            <div class="card__contact">
+              <dt><span class="accent-square" aria-hidden="true"></span>Adresse</dt>
+              <dd>Rautbrühl 11, 88214 Ravensburg</dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </div>
   </main>
